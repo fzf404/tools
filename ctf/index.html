@@ -1,43 +1,66 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <title>fzf404 ｜ 工具</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/x-icon" href="https://img.fzf404.art/favicon.ico" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sedom/dist/sedom.min.css" />
-    <!-- <link rel="stylesheet" href="http://127.0.0.1:3000/dist/sedom.css" /> -->
-    <script src="https://cdn.jsdelivr.net/npm/sedom/dist/sedom.min.js"></script>
-  </head>
-  <body>
-    <h2>
-      <span>夺棋赛</span>
-      <span class="jump theme">🎉</span>
-    </h2>
-    <h4>QinLi Studio 2022 CTF 🎁</h4>
-    <code> 
-      docker run -itd -h qlstudio -p 30022:22 fzf404/ctf bash 
-      ssh ql@localhost -p 30022 
-      password: qlstudio 
-    </code>
-    <hr />
-    <p class="space">
-      <a>01-flag</a>
-      <a>02-hide</a>
-      <a>03-find</a>
-      <a>04-unzip</a>
-    </p>
-    <p>
-      <a>05-access</a>
-      <a>06-python</a>
-      <a>07-nginx</a>
-    </p>
-    <hr />
 
-    <form>
-      <label for="mark">标记</label>
-      <input id="mark" type="text" placeholder="请输入标记" />
-      <a class="a-blue">提交</a>
-    </form>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <title>fzf404｜CTF</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="https://img.fzf404.art/favicon.ico" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sedom/dist/sedom.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/sedom/dist/sedom.min.js"></script>
+  <script>
+    var _hmt = _hmt || [];
+    (function () {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?35a26dead5e790cb29ec1d40fdde8f14";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+</head>
+
+<body>
+  <h2>
+    <span>夺棋赛</span>
+    <span class="jump theme">🎉</span>
+  </h2>
+  <h4>QinLi Studio 2022 CTF 🎁</h4>
+  <code>
+      docker run -itd -h qlstudio -p 30022:22 fzf404/ctf bash
+      ssh ql@localhost -p 30022
+      password: qlstudio
+    </code>
+  <hr />
+  <p class="space">
+    <a id="flag">01-flag</a>
+    <a id="hide">02-hide</a>
+    <a id="find">03-find</a>
+    <a id="unzip">04-unzip</a>
+  </p>
+  <p>
+    <a id="access">05-access</a>
+    <a id="python">06-python</a>
+    <a id="nginx">07-nginx</a>
+  </p>
+  <hr />
+  <form>
+    <label for="mark">标记</label>
+    <input id="mark" type="text" placeholder="请输入标记" />
+    <a class="a-blue" onclick="submit()">提交</a>
+  </form>
+
+  <script>
+    function submit() {
+      const flag = document.getElementById('mark').value
+
+      fetch('flag/' + flag).then(res => res.json()).then(data => {
+        document.getElementById(data).setAttribute('class', 'a-green')
+        localStorage.setItem(data, flag)
+      })
+    }
+
+
+  </script>
+</body>
+
 </html>
