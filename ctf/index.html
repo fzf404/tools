@@ -21,45 +21,82 @@
 
 <body>
   <h2>
-    <span>夺棋赛</span>
-    <span class="jump theme">🎉</span>
+    夺旗赛 🎉
   </h2>
   <h4>QinLi Studio 2022 CTF 🎁</h4>
   <code>
       docker run -itd -h qlstudio -p 30022:22 fzf404/ctf bash
       ssh ql@localhost -p 30022
       password: qlstudio
-    </code>
+  </code>
   <hr />
-  <p class="space">
-    <a id="flag">01-flag</a>
-    <a id="hide">02-hide</a>
-    <a id="find">03-find</a>
-    <a id="unzip">04-unzip</a>
+  <p>
+    <button id="flag" class="red">01-flag</button>
+    <button id="hide" class="orange">02-hide</button>
+    <button id="find" class="yellow">03-find</button>
+    <button id="unzip" class="green">04-unzip</button>
   </p>
   <p>
-    <a id="access">05-access</a>
-    <a id="python">06-python</a>
-    <a id="nginx">07-nginx</a>
+    <button id="access" class="cyan">05-access</button>
+    <button id="python" class="indigo">06-python</button>
+    <button id="nginx" class="purple">07-nginx</button>
   </p>
   <hr />
-  <form>
+  <form class="space">
     <label for="mark">标记</label>
     <input id="mark" type="text" placeholder="请输入标记" />
-    <a class="a-blue" onclick="submit()">提交</a>
+    <button id="submit" class="blue">提交</button>
   </form>
-
+  <h6>
+    <a class="right blue" href="..">返回</a>
+  </h6>
+  <button class="theme">🌓</button>
   <script>
-    function submit() {
-      const flag = document.getElementById('mark').value
+    let score = 0
 
+    // 验证标记
+    function verify(flag) {
       fetch('flag/' + flag).then(res => res.json()).then(data => {
-        document.getElementById(data).setAttribute('class', 'a-green')
+        document.getElementById(data).setAttribute('class', 'rainbow')
         localStorage.setItem(data, flag)
+        score += 1
+        if (score === 7) {
+          setInterval(() => {
+            Sedom.toggleTheme()
+          }, 300)
+        }
       })
     }
 
+    // 读取标记
+    function init() {
+      localStorage.hasOwnProperty('flag') && verify(localStorage.getItem('flag'))
+      localStorage.hasOwnProperty('hide') && verify(localStorage.getItem('hide'))
+      localStorage.hasOwnProperty('find') && verify(localStorage.getItem('find'))
+      localStorage.hasOwnProperty('unzip') && verify(localStorage.getItem('unzip'))
+      localStorage.hasOwnProperty('access') && verify(localStorage.getItem('access'))
+      localStorage.hasOwnProperty('python') && verify(localStorage.getItem('python'))
+      localStorage.hasOwnProperty('nginx') && verify(localStorage.getItem('nginx'))
+    }
 
+    // 提交标记
+    document.getElementById('submit').addEventListener('click', (event) => {
+      // 阻止默认事件
+      event.preventDefault()
+
+      // 获取标记
+      const flag = document.getElementById('mark')
+
+      // 验证标记
+      if (flag.length === 8) {
+        verify(flag.value)
+      } else {
+        flag.setAttribute('placeholder', '标记应为8位')
+      }
+    })
+
+    // 初始化
+    init()
   </script>
 </body>
 
