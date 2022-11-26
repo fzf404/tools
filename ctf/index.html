@@ -52,7 +52,10 @@
   </h6>
   <button class="theme">🌓</button>
   <script>
+    // 成绩
     let score = 0
+    // 输入框
+    const input = document.getElementById('mark')
 
     // 验证标记
     function verify(flag) {
@@ -65,6 +68,8 @@
             Sedom.toggleTheme()
           }, 300)
         }
+      }).catch(err => {
+        input.setAttribute('placeholder', '标记错误')
       })
     }
 
@@ -85,13 +90,16 @@
       event.preventDefault()
 
       // 获取标记
-      const flag = document.getElementById('mark')
+      const flag = input.value
+
+      // 清空标记
+      input.value = ''
 
       // 验证标记
       if (flag.length === 8) {
-        verify(flag.value)
+        verify(flag)
       } else {
-        flag.setAttribute('placeholder', '标记应为8位')
+        input.setAttribute('placeholder', '标记应为8位')
       }
     })
 
