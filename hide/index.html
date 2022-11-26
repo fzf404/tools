@@ -1,80 +1,69 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>fzf404｜文字隐藏</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/web-themes@0.2.14/simple/common.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/web-themes@0.2.14/simple/theme.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/text-hider@1.2.0/dist/index.js"></script>
-    <script>
-      var _hmt = _hmt || [];
-      (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?35a26dead5e790cb29ec1d40fdde8f14";
-        var s = document.getElementsByTagName("script")[0]; 
-        s.parentNode.insertBefore(hm, s);
-      })();
-      </script>
-  </head>
-  <body>
-    <h1>文字隐藏者 🥷</h1>
-    <h2>Hidden Text in Message 💬</h2>
-    <div class="help">
-      <label></label>
-      <span class="notice">加密需填写如下两字段</span>
-      <br />
-    </div>
-    <label>密文</label>
-    <input id="secret" type="text" placeholder="需要隐藏的文字" />
-    <br />
-    <label>载体</label>
-    <input id="message" type="text" placeholder="只需两个字足以" />
-    <br />
-    <div class="help">
-      <label></label>
-      <span class="notice">加/解密时如需密码则填写</span>
-      <br />
-    </div>
-    <label>密钥</label>
-    <input id="password" type="text" placeholder="可不填" />
-    <br />
-    <div class="help">
-      <label></label>
-      <span class="notice">解密需填写如下字段</span>
-      <br />
-    </div>
-    <label>结果</label>
-    <input id="result" type="text" placeholder="带有隐藏信息的文本" />
-    <p class="center">
-      <a onclick="hide()">加密</a>
-      <a></a>
 
-      <a class="purple" onclick="reveal()">解密</a>
-    </p>
-    <p>
-      <a class="fr" href="..">返回</a>
-      <a class="pink fr" href="https://github.com/fzf404/TextHider" target="_blank">Github</a>
-      <a class="grey-blue fr" onclick="help()">帮助</a>
-    </p>
-    <script>
-      function hide() {
-        const secret = $('#secret').val()
-        const message = $('#message').val()
-        const password = $('#password').val()
-        const result = new TextHider().hide(secret, password, message)
-        $('#result').val(result)
-      }
-      function reveal() {
-        const result = $('#result').val()
-        const password = $('#password').val()
-        const secret = new TextHider().reveal(result, password)
-        $('#secret').val(secret)
-      }
-      function help() {
-        $('.help').toggle()
-      }
-    </script>
-  </body>
+<head>
+  <meta charset="utf-8" />
+  <title>fzf404｜文字隐藏</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="https://img.fzf404.art/favicon.ico" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sedom/dist/sedom.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/sedom/dist/sedom.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/text-hider/dist/index.js"></script>
+  <script>
+    var _hmt = _hmt || [];
+    (function () {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?35a26dead5e790cb29ec1d40fdde8f14";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+</head>
+
+<body>
+  <h2>文字隐藏者 🥷</h2>
+  <h4>Hidden Text in Message 💬</h4>
+  <form>
+    <label for="message">原文</label>
+    <input id="message" type="text" placeholder="展示的文字" />
+    <br />
+    <label for="secret">密文</label>
+    <input id="secret" type="text" placeholder="隐藏的文字" />
+    <br />
+    <label for="password">密钥</label>
+    <input id="password" type="text" placeholder="加密的密钥" />
+    <br />
+    <label for="result">输出</label>
+    <input id="result" type="text" placeholder="加密的结果" />
+  </form>
+  <p>
+    <label></label>
+    <button class="cyan" onclick="encrypt()">加密</button>
+    <button class="violet" onclick="decrypt()">解密</button>
+  </p>
+  <h6 class="space">
+    <a class="right blue" href="..">返回</a>
+    <a class="right red" href="https://github.com/fzf404/TextHider" target="_blank">Github</a>
+  </h6>
+  <button class="theme">🌓</button>
+  <script>
+    // 获取元素
+    const message = document.getElementById('message')
+    const secret = document.getElementById('secret')
+    const password = document.getElementById('password')
+    const result = document.getElementById('result')
+
+    // 加密
+    function encrypt() {
+      const text = new TextHider().hide(secret.value, password.value, message.value)
+      result.value = text
+    }
+    // 解密
+    function decrypt() {
+      const text = new TextHider().reveal(result.value, password.value)
+      secret.value = text
+    }
+  </script>
+</body>
+
 </html>

@@ -20,9 +20,7 @@
 </head>
 
 <body>
-  <h2>
-    夺旗赛 🎉
-  </h2>
+  <h2>夺旗赛 🎉</h2>
   <h4>QinLi Studio 2022 CTF 🎁</h4>
   <code>
       docker run -itd -h qlstudio -p 30022:22 fzf404/ctf bash
@@ -60,17 +58,15 @@
     // 验证标记
     function verify(flag) {
       fetch('flag/' + flag).then(res => res.json()).then(data => {
-        document.getElementById(data).setAttribute('class', 'rainbow')
-        localStorage.setItem(data, flag)
         score += 1
+        localStorage.setItem(data, flag)
+        document.getElementById(data).setAttribute('class', 'rainbow')
         if (score === 7) {
           setInterval(() => {
             Sedom.toggleTheme()
           }, 300)
         }
-      }).catch(err => {
-        input.setAttribute('placeholder', '标记错误')
-      })
+      }).catch(err => input.setAttribute('placeholder', '标记错误'))
     }
 
     // 读取标记
@@ -97,9 +93,13 @@
 
       // 验证标记
       if (flag.length === 8) {
+
         verify(flag)
+
       } else {
+
         input.setAttribute('placeholder', '标记应为8位')
+
       }
     })
 
