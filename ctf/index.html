@@ -45,8 +45,9 @@
     <input id="mark" type="text" placeholder="请输入标记" />
     <button id="submit" class="blue">提交</button>
   </form>
-  <h6>
+  <h6 class="space">
     <a class="right blue" href="..">返回</a>
+    <a id="reset" class="right pink">清空</a>
   </h6>
   <button class="theme">🌓</button>
   <script>
@@ -58,15 +59,30 @@
     // 验证标记
     function verify(flag) {
       fetch('flag/' + flag).then(res => res.json()).then(data => {
+        // 验证成功
         score += 1
+        // 保存答案
         localStorage.setItem(data, flag)
+        // 调整动画
         document.getElementById(data).setAttribute('class', 'rainbow')
+        // 完成全部
         if (score === 7) {
-          setInterval(() => {
+          // 闪烁动画
+          const flash = setInterval(() => {
             Sedom.toggleTheme()
           }, 300)
+          // 停止闪烁
+          setTimeout(() => {
+            clearInterval(flash)
+          }, 2000)
         }
       }).catch(err => input.setAttribute('placeholder', '标记错误'))
+    }
+
+    // 重置标记
+    function reset() {
+      localStorage.clear()
+      location.reload()
     }
 
     // 读取标记
@@ -78,30 +94,29 @@
       localStorage.hasOwnProperty('access') && verify(localStorage.getItem('access'))
       localStorage.hasOwnProperty('python') && verify(localStorage.getItem('python'))
       localStorage.hasOwnProperty('nginx') && verify(localStorage.getItem('nginx'))
-    }
 
-    // 提交标记
-    document.getElementById('submit').addEventListener('click', (event) => {
-      // 阻止默认事件
-      event.preventDefault()
+      // 提交标记
+      document.getElementById('submit').addEventListener('click', (event) => {
+        // 阻止默认事件
+        event.preventDefault()
 
-      // 获取标记
-      const flag = input.value
+        // 获取标记
+        const flag = input.value
+
+        // 清空标记
+        input.value = ''
+
+        // 验证标记
+        if (flag.length === 8) {
+          verify(flag)
+        } else {
+          input.setAttribute('placeholder', '标记应为8位')
+        }
+      })
 
       // 清空标记
-      input.value = ''
-
-      // 验证标记
-      if (flag.length === 8) {
-
-        verify(flag)
-
-      } else {
-
-        input.setAttribute('placeholder', '标记应为8位')
-
-      }
-    })
+      document.getElementById('reset').addEventListener('click', reset)
+    }
 
     // 初始化
     init()
