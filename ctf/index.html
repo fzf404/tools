@@ -29,15 +29,15 @@
   </code>
   <hr />
   <p>
-    <button id="flag" class="red">01-flag</button>
-    <button id="hide" class="orange">02-hide</button>
-    <button id="find" class="yellow">03-find</button>
-    <button id="unzip" class="green">04-unzip</button>
+    <button id="flag" class="red" disabled>01-flag</button>
+    <button id="hide" class="orange" disabled>02-hide</button>
+    <button id="find" class="yellow" disabled>03-find</button>
+    <button id="unzip" class="green" disabled>04-unzip</button>
   </p>
   <p>
-    <button id="access" class="cyan">05-access</button>
-    <button id="python" class="indigo">06-python</button>
-    <button id="nginx" class="purple">07-nginx</button>
+    <button id="access" class="cyan" disabled>05-access</button>
+    <button id="python" class="indigo" disabled>06-python</button>
+    <button id="nginx" class="purple" disabled>07-nginx</button>
   </p>
   <hr />
   <form class="space">
@@ -65,6 +65,7 @@
         localStorage.setItem(data, flag)
         // 调整动画
         document.getElementById(data).setAttribute('class', 'rainbow')
+        document.getElementById(data).removeAttribute('disabled')
         // 完成全部
         if (score === 7) {
           // 闪烁动画
