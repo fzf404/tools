@@ -1,4 +1,4 @@
-# [Docute](https://github.com/fzf404/Docute)
+# Docute
 
 > 基于 `Docute` 的文档生成器
 
