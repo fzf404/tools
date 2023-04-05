@@ -40,7 +40,7 @@
     <button id="nginx" class="purple" disabled>07-nginx</button>
   </p>
   <hr />
-  <form class="space">
+  <form>
     <label for="mark">标记</label>
     <input id="mark" type="text" placeholder="请输入标记" />
     <button id="submit" class="blue">提交</button>
@@ -77,17 +77,25 @@
             clearInterval(flash)
           }, 2000)
         }
-      }).catch(err => input.setAttribute('placeholder', '标记错误'))
+      }).catch(
+        () => {
+          // 修改提示
+          input.setAttribute('placeholder', '标记错误')
+        }
+      )
     }
 
     // 重置标记
     function reset() {
+      // 清空标记
       localStorage.clear()
+      // 重载页面
       location.reload()
     }
 
-    // 读取标记
+    // 初始化页面
     function init() {
+      // 验证已保存标记
       localStorage.hasOwnProperty('flag') && verify(localStorage.getItem('flag'))
       localStorage.hasOwnProperty('hide') && verify(localStorage.getItem('hide'))
       localStorage.hasOwnProperty('find') && verify(localStorage.getItem('find'))
@@ -96,7 +104,7 @@
       localStorage.hasOwnProperty('python') && verify(localStorage.getItem('python'))
       localStorage.hasOwnProperty('nginx') && verify(localStorage.getItem('nginx'))
 
-      // 提交标记
+      // 提交事件处理
       document.getElementById('submit').addEventListener('click', (event) => {
         // 阻止默认事件
         event.preventDefault()
@@ -106,11 +114,15 @@
 
         // 清空标记
         input.value = ''
+        // 修改提示
+        input.setAttribute('placeholder', '请输入标记')
 
-        // 验证标记
+        // 验证标记长度
         if (flag.length === 8) {
+          // 验证标记内容
           verify(flag)
         } else {
+          // 修改提示
           input.setAttribute('placeholder', '标记应为8位')
         }
       })
