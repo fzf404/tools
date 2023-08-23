@@ -1,139 +1,145 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>fzf404 - CTF</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.6" />
+    <link rel="stylesheet" href="https://cdn.fzf404.art/sedom/dist/sedom.css" />
+    <script src="https://cdn.fzf404.art/sedom/dist/sedom.js"></script>
+    <script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?35a26dead5e790cb29ec1d40fdde8f14";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <title>fzf404 - CTF</title>
-  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-  <meta name="viewport" content="width=device-width, initial-scale=0.6" />
-  <link rel="stylesheet" href="https://cdn.fzf404.art/sedom/dist/sedom.min.css" />
-  <script src="https://cdn.fzf404.art/sedom/dist/sedom.min.js"></script>
-  <script>
-    var _hmt = _hmt || [];
-    (function () {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?35a26dead5e790cb29ec1d40fdde8f14";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-</head>
+  <body>
+    <h2>夺旗赛 🎉</h2>
+    <h4>QinLi Studio 2022 CTF 🎁</h4>
+    <code>
+      <pre>docker run -itd -h qlstudio -p 30022:22 fzf404/ctf bash</pre>
+      <pre>ssh ql@localhost -p 30022</pre>
+      <pre>password: qlstudio</pre>
+    </code>
+    <hr />
+    <p>
+      <button id="flag" class="red" disabled>01-flag</button>
+      <button id="hide" class="orange" disabled>02-hide</button>
+      <button id="find" class="yellow" disabled>03-find</button>
+      <button id="unzip" class="green" disabled>04-unzip</button>
+    </p>
+    <p>
+      <button id="access" class="cyan" disabled>05-access</button>
+      <button id="python" class="indigo" disabled>06-python</button>
+      <button id="nginx" class="purple" disabled>07-nginx</button>
+    </p>
+    <hr />
+    <form>
+      <label for="mark">标记</label>
+      <input id="mark" type="text" placeholder="请输入标记" />
+      <button id="submit" class="blue">提交</button>
+    </form>
+    <h6 class="space">
+      <a class="right blue" href="..">返回</a>
+      <a id="reset" class="right pink">清空</a>
+    </h6>
+    <button class="theme">🌓</button>
+    <script>
+      // 成绩
+      let score = 0;
+      // 输入框
+      const input = document.getElementById("mark");
 
-<body>
-  <h2>夺旗赛 🎉</h2>
-  <h4>QinLi Studio 2022 CTF 🎁</h4>
-  <code>
-      docker run -itd -h qlstudio -p 30022:22 fzf404/ctf bash
-      ssh ql@localhost -p 30022
-      password: qlstudio
-  </code>
-  <hr />
-  <p>
-    <button id="flag" class="red" disabled>01-flag</button>
-    <button id="hide" class="orange" disabled>02-hide</button>
-    <button id="find" class="yellow" disabled>03-find</button>
-    <button id="unzip" class="green" disabled>04-unzip</button>
-  </p>
-  <p>
-    <button id="access" class="cyan" disabled>05-access</button>
-    <button id="python" class="indigo" disabled>06-python</button>
-    <button id="nginx" class="purple" disabled>07-nginx</button>
-  </p>
-  <hr />
-  <form>
-    <label for="mark">标记</label>
-    <input id="mark" type="text" placeholder="请输入标记" />
-    <button id="submit" class="blue">提交</button>
-  </form>
-  <h6 class="space">
-    <a class="right blue" href="..">返回</a>
-    <a id="reset" class="right pink">清空</a>
-  </h6>
-  <button class="theme">🌓</button>
-  <script>
-    // 成绩
-    let score = 0
-    // 输入框
-    const input = document.getElementById('mark')
+      // 验证标记
+      function verify(flag) {
+        fetch("flag/" + flag)
+          .then((res) => res.json())
+          .then((data) => {
+            // 验证成功
+            score += 1;
+            // 保存答案
+            localStorage.setItem(data, flag);
+            // 调整动画
+            document.getElementById(data).setAttribute("class", "rainbow");
+            document.getElementById(data).removeAttribute("disabled");
+            // 完成全部
+            if (score === 7) {
+              // 闪烁动画
+              const flash = setInterval(() => {
+                Sedom.toggleTheme();
+              }, 300);
+              // 停止闪烁
+              setTimeout(() => {
+                clearInterval(flash);
+              }, 2000);
+            }
+          })
+          .catch(() => {
+            // 修改提示
+            input.setAttribute("placeholder", "标记错误");
+          });
+      }
 
-    // 验证标记
-    function verify(flag) {
-      fetch('flag/' + flag).then(res => res.json()).then(data => {
-        // 验证成功
-        score += 1
-        // 保存答案
-        localStorage.setItem(data, flag)
-        // 调整动画
-        document.getElementById(data).setAttribute('class', 'rainbow')
-        document.getElementById(data).removeAttribute('disabled')
-        // 完成全部
-        if (score === 7) {
-          // 闪烁动画
-          const flash = setInterval(() => {
-            Sedom.toggleTheme()
-          }, 300)
-          // 停止闪烁
-          setTimeout(() => {
-            clearInterval(flash)
-          }, 2000)
-        }
-      }).catch(
-        () => {
+      // 重置标记
+      function reset() {
+        // 清空标记
+        localStorage.clear();
+        // 重载页面
+        location.reload();
+      }
+
+      // 初始化页面
+      function init() {
+        // 验证已保存标记
+        localStorage.hasOwnProperty("flag") &&
+          verify(localStorage.getItem("flag"));
+        localStorage.hasOwnProperty("hide") &&
+          verify(localStorage.getItem("hide"));
+        localStorage.hasOwnProperty("find") &&
+          verify(localStorage.getItem("find"));
+        localStorage.hasOwnProperty("unzip") &&
+          verify(localStorage.getItem("unzip"));
+        localStorage.hasOwnProperty("access") &&
+          verify(localStorage.getItem("access"));
+        localStorage.hasOwnProperty("python") &&
+          verify(localStorage.getItem("python"));
+        localStorage.hasOwnProperty("nginx") &&
+          verify(localStorage.getItem("nginx"));
+
+        // 提交事件处理
+        document.getElementById("submit").addEventListener("click", (event) => {
+          // 阻止默认事件
+          event.preventDefault();
+
+          // 获取标记
+          const flag = input.value;
+
+          // 清空标记
+          input.value = "";
           // 修改提示
-          input.setAttribute('placeholder', '标记错误')
-        }
-      )
-    }
+          input.setAttribute("placeholder", "请输入标记");
 
-    // 重置标记
-    function reset() {
-      // 清空标记
-      localStorage.clear()
-      // 重载页面
-      location.reload()
-    }
-
-    // 初始化页面
-    function init() {
-      // 验证已保存标记
-      localStorage.hasOwnProperty('flag') && verify(localStorage.getItem('flag'))
-      localStorage.hasOwnProperty('hide') && verify(localStorage.getItem('hide'))
-      localStorage.hasOwnProperty('find') && verify(localStorage.getItem('find'))
-      localStorage.hasOwnProperty('unzip') && verify(localStorage.getItem('unzip'))
-      localStorage.hasOwnProperty('access') && verify(localStorage.getItem('access'))
-      localStorage.hasOwnProperty('python') && verify(localStorage.getItem('python'))
-      localStorage.hasOwnProperty('nginx') && verify(localStorage.getItem('nginx'))
-
-      // 提交事件处理
-      document.getElementById('submit').addEventListener('click', (event) => {
-        // 阻止默认事件
-        event.preventDefault()
-
-        // 获取标记
-        const flag = input.value
+          // 验证标记长度
+          if (flag.length === 8) {
+            // 验证标记内容
+            verify(flag);
+          } else {
+            // 修改提示
+            input.setAttribute("placeholder", "标记应为8位");
+          }
+        });
 
         // 清空标记
-        input.value = ''
-        // 修改提示
-        input.setAttribute('placeholder', '请输入标记')
+        document.getElementById("reset").addEventListener("click", reset);
+      }
 
-        // 验证标记长度
-        if (flag.length === 8) {
-          // 验证标记内容
-          verify(flag)
-        } else {
-          // 修改提示
-          input.setAttribute('placeholder', '标记应为8位')
-        }
-      })
-
-      // 清空标记
-      document.getElementById('reset').addEventListener('click', reset)
-    }
-
-    // 初始化
-    init()
-  </script>
-</body>
-
+      // 初始化
+      init();
+    </script>
+  </body>
 </html>

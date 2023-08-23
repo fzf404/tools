@@ -1,69 +1,76 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <title>fzf404 - 文字隐藏</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.6" />
+    <link rel="stylesheet" href="https://cdn.fzf404.art/sedom/dist/sedom.css" />
+    <script src="https://cdn.fzf404.art/sedom/dist/sedom.js"></script>
+    <script src="https://cdn.fzf404.art/text-hider/dist/index.js"></script>
+    <script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?35a26dead5e790cb29ec1d40fdde8f14";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  </head>
 
-<head>
-  <meta charset="utf-8" />
-  <title>fzf404 - 文字隐藏</title>
-  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-  <meta name="viewport" content="width=device-width, initial-scale=0.6" />
-  <link rel="stylesheet" href="https://cdn.fzf404.art/sedom/dist/sedom.min.css" />
-  <script src="https://cdn.fzf404.art/sedom/dist/sedom.min.js"></script>
-  <script src="https://cdn.fzf404.art/texthider/dist/index.js"></script>
-  <script>
-    var _hmt = _hmt || [];
-    (function () {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?35a26dead5e790cb29ec1d40fdde8f14";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-</head>
+  <body>
+    <h2>文字隐藏者 🥷</h2>
+    <h4>Hidden Text in Message 💬</h4>
+    <form>
+      <label for="message">原文</label>
+      <input id="message" type="text" placeholder="展示的文字" />
+      <br />
+      <label for="secret">密文</label>
+      <input id="secret" type="text" placeholder="隐藏的文字" />
+      <br />
+      <label for="password">密钥</label>
+      <input id="password" type="text" placeholder="加密的密钥" />
+      <br />
+      <label for="result">结果</label>
+      <input id="result" type="text" placeholder="加密的消息" />
+    </form>
+    <p class="space">
+      <label>&emsp;&emsp;&emsp;&emsp;</label>
+      <button class="cyan" onclick="encrypt()">加密</button>
+      <button class="violet" onclick="decrypt()">解密</button>
+    </p>
+    <h6 class="space">
+      <a class="right blue" href="..">返回</a>
+      <a
+        class="right pink"
+        href="https://github.com/fzf404/TextHider"
+        target="_blank"
+        >Github</a
+      >
+    </h6>
+    <button class="theme">🌓</button>
+    <script>
+      // 获取元素
+      const message = document.getElementById("message");
+      const secret = document.getElementById("secret");
+      const password = document.getElementById("password");
+      const result = document.getElementById("result");
 
-<body>
-  <h2>文字隐藏者 🥷</h2>
-  <h4>Hidden Text in Message 💬</h4>
-  <form>
-    <label for="message">原文</label>
-    <input id="message" type="text" placeholder="展示的文字" />
-    <br />
-    <label for="secret">密文</label>
-    <input id="secret" type="text" placeholder="隐藏的文字" />
-    <br />
-    <label for="password">密钥</label>
-    <input id="password" type="text" placeholder="加密的密钥" />
-    <br />
-    <label for="result">结果</label>
-    <input id="result" type="text" placeholder="加密的消息" />
-  </form>
-  <p class="space">
-    <label>&emsp;&emsp;&emsp;&emsp;</label>
-    <button class="cyan" onclick="encrypt()">加密</button>
-    <button class="violet" onclick="decrypt()">解密</button>
-  </p>
-  <h6 class="space">
-    <a class="right blue" href="..">返回</a>
-    <a class="right pink" href="https://github.com/fzf404/TextHider" target="_blank">Github</a>
-  </h6>
-  <button class="theme">🌓</button>
-  <script>
-    // 获取元素
-    const message = document.getElementById('message')
-    const secret = document.getElementById('secret')
-    const password = document.getElementById('password')
-    const result = document.getElementById('result')
-
-    // 加密
-    function encrypt() {
-      const text = new TextHider().hide(secret.value, password.value, message.value)
-      result.value = text
-    }
-    // 解密
-    function decrypt() {
-      const text = new TextHider().reveal(result.value, password.value)
-      secret.value = text
-    }
-  </script>
-</body>
-
+      // 加密
+      function encrypt() {
+        const text = new TextHider().hide(
+          secret.value,
+          password.value,
+          message.value
+        );
+        result.value = text;
+      }
+      // 解密
+      function decrypt() {
+        const text = new TextHider().reveal(result.value, password.value);
+        secret.value = text;
+      }
+    </script>
+  </body>
 </html>
