@@ -69,15 +69,6 @@
             document.getElementById(data).removeAttribute("disabled");
             // 完成全部
             if (score === 7) {
-              const secret =
-                localStorage.getItem("flag")[0] +
-                localStorage.getItem("hide")[0] +
-                localStorage.getItem("find")[0] +
-                localStorage.getItem("unzip")[0] +
-                localStorage.getItem("access")[0] +
-                localStorage.getItem("python")[0] +
-                localStorage.getItem("nginx")[0];
-              alert("口令红包为：" + secret.toLocaleLowerCase());
               // 闪烁动画
               const flash = setInterval(() => {
                 Sedom.toggleTheme();
@@ -85,6 +76,7 @@
               // 停止闪烁
               setTimeout(() => {
                 clearInterval(flash);
+                reward();
               }, 2000);
             }
           })
@@ -92,6 +84,18 @@
             // 修改提示
             input.setAttribute("placeholder", "标记错误");
           });
+      }
+
+      function reward() {
+        const secret =
+          localStorage.getItem("flag")[0] +
+          localStorage.getItem("hide")[0] +
+          localStorage.getItem("find")[0] +
+          localStorage.getItem("unzip")[0] +
+          localStorage.getItem("access")[0] +
+          localStorage.getItem("python")[0] +
+          localStorage.getItem("nginx")[0];
+        alert("口令红包为：" + secret.toLocaleLowerCase());
       }
 
       // 重置标记
